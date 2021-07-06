@@ -8,6 +8,7 @@ import {
   CardActionArea,
   Typography,
   Grid,
+  GridSize,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import {
@@ -17,21 +18,24 @@ import {
 } from "@material-ui/icons";
 import { ProductItemShape } from "interface/ProductItemShape";
 
-interface Props extends ProductItemShape {}
+interface Props extends ProductItemShape {
+  size?: GridSize;
+}
 
 export default function ProductItem({
   id,
   name,
-  description,
+  shortDescription,
   image,
   price,
   category,
+  size = 3,
 }: Props) {
   const history = useHistory();
   const [isLiked, setLiked] = useState(false);
 
   return (
-    <Grid item md={3}>
+    <Grid item md={size}>
       <Card>
         <CardActionArea onClick={() => history.push(`/product/${id}`)}>
           <CardMedia src={image} title={name} component="img" />
@@ -43,7 +47,7 @@ export default function ProductItem({
               ${price}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {description}
+              {shortDescription}
             </Typography>
           </CardContent>
         </CardActionArea>

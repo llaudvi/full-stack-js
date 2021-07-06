@@ -31,7 +31,7 @@ export default function Products() {
         key={item.id}
         id={item.id}
         name={item.name}
-        description={item.shortDescription}
+        shortDescription={item.shortDescription}
         image={item.image}
         price={item.price}
         category={item.category}
