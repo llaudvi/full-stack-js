@@ -13,15 +13,4 @@ const productSchema = new Schema({
   ...defaultColumns,
 });
 
-// Remove _v & replace _id props with id...
-// productSchema.set('toJSON', {
-//   virtuals: true,
-//   versionKey: false,
-//   transform: function (doc, ret, options) {
-//     ret.id = ret._id;
-//     delete ret._id;
-//     delete ret.__v;
-//   },
-// });
-
 export default mongoose.model('Product', productSchema);

@@ -1,20 +1,31 @@
 import { ApolloError } from 'apollo-server-express';
 import Product from '../model/product.model';
+import { logError } from '../utils';
 
 export async function getAllProducts() {
-  const product = await Product.find({}, (error, products) => {
-    if (error) return new ApolloError(error);
-    return products;
-  });
+  try {
+    const product = await Product.find({}, (error, products) => {
+      if (error) return new ApolloError(error);
+      return products;
+    });
 
-  return product;
+    return product;
+  } catch (error) {
+    logError(error);
+    throw new ApolloError(error);
+  }
 }
 
 export async function getProduct(id) {
-  const product = await Product.findById(id, (error, product) => {
-    if (error || !product) return new ApolloError(error);
-    return { ...product, id: product._id };
-  });
+  try {
+    const product = await Product.findById(id, (error, product) => {
+      if (error || !product) return new ApolloError(error);
+      return { ...product, id: product._id };
+    });
 
-  return product;
+    return product;
+  } catch (error) {
+    logError(error);
+    throw new ApolloError(error);
+  }
 }

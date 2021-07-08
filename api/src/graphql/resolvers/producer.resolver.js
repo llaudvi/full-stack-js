@@ -18,8 +18,7 @@ export default {
     },
     // Get Specific Product Item...
     async getProduct(_, { id }) {
-      const product = await getProduct(id);
-      return product;
+      return getProduct(id);
     },
   },
 };
