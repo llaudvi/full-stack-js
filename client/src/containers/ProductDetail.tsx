@@ -1,30 +1,31 @@
 import { useQuery, gql } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { Grid, Paper, Container, Typography } from "@material-ui/core";
+import { Grid, Container, Typography } from "@material-ui/core";
 import { Retry, ProductItem } from "components";
 import { ProductItemShape } from "interface/ProductItemShape";
-
-const PRODUCT_DETAIL_QUERY = gql`
-  query product($id: String!) {
-    getProduct(id: $id) {
-      id
-      name
-      description
-      price
-      category
-      image
-    }
-  }
-`;
 
 export default function ProductDetail() {
   const { productId } = useParams<{ productId: string }>();
 
   const { loading, error, data, refetch } = useQuery<{
     getProduct: ProductItemShape;
-  }>(PRODUCT_DETAIL_QUERY, {
-    variables: { id: productId },
-  });
+  }>(
+    gql`
+      query product($id: String!) {
+        getProduct(id: $id) {
+          id
+          name
+          description
+          price
+          category
+          image
+        }
+      }
+    `,
+    {
+      variables: { id: productId },
+    }
+  );
 
   if (loading) return <p>Loading Item...</p>;
   if (error && !loading)
@@ -46,6 +47,8 @@ export default function ProductDetail() {
         category={getProduct.category}
       />
     );
+  } else {
+    content = <p>Can't find product</p>;
   }
 
   return (

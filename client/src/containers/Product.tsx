@@ -3,22 +3,21 @@ import { Grid, Container } from "@material-ui/core";
 import { Retry, ProductItem } from "components";
 import { ProductItemShape } from "interface/ProductItemShape";
 
-const PRODUCT_QUERY = gql`
-  query allProducts {
-    allProducts {
-      id
-      name
-      shortDescription
-      image
-      category
-      price
-    }
-  }
-`;
-
 export default function Products() {
-  const { loading, error, data, refetch } =
-    useQuery<{ allProducts: ProductItemShape[] }>(PRODUCT_QUERY);
+  const { loading, error, data, refetch } = useQuery<{
+    allProducts: ProductItemShape[];
+  }>(gql`
+    query allProducts {
+      allProducts {
+        id
+        name
+        shortDescription
+        image
+        category
+        price
+      }
+    }
+  `);
 
   if (loading) return <p>Loading...</p>;
   if (error && !loading)
